@@ -1,0 +1,57 @@
+<div class="container">
+  <h2>Gerenciamento de Participantes</h2>
+
+  <table class="table table-bordered">
+    <thead>
+    <tr>
+      <th><input type="checkbox" /></th>
+      <th>Código</th>
+      <th>Código Externo</th>
+      <th>Nome Completo</th>
+      <th>CPF/CNPJ</th>
+      <th>Telefone</th>
+      <th>Assinatura</th>
+      <th>Status</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let participant of participants">
+      <td><input type="checkbox" (change)="onSelectParticipant(participant, $event)" /></td>
+      <td>{{ participant.id }}</td>
+      <td>{{ participant.codigoExterno }}</td>
+      <td>{{ participant.nomeCompleto }}</td>
+      <td>{{ participant.cpfCnpj }}</td>
+      <td>{{ participant.telefone }}</td>
+      <td>{{ participant.assinatura ? 'Sim' : 'Não' }}</td>
+      <td>{{ participant.status ? 'Ativo' : 'Inativo' }}</td>
+    </tr>
+    </tbody>
+  </table>
+
+  <!-- Controles de Paginação -->
+  <div class="pagination-container">
+    <div class="pagination-info">
+      <span>Itens por página:</span>
+      <select [(ngModel)]="pageSize" (change)="onPageChange(0)">
+        <option [value]="5">5</option>
+        <option [value]="10">10</option>
+        <option [value]="25">25</option>
+      </select>
+      <span>Página {{ pageNumber + 1 }} de {{ totalItems / pageSize | ceil }}</span>
+    </div>
+
+    <div class="pagination-buttons">
+      <button (click)="onPageChange(pageNumber - 1)" [disabled]="pageNumber === 0">← Anterior</button>
+      <button (click)="onPageChange(pageNumber + 1)" [disabled]="(pageNumber + 1) * pageSize >= totalItems">Próxima →</button>
+    </div>
+  </div>
+
+  <!-- Botões para Excluir e Adicionar -->
+  <div class="button-container">
+    <button (click)="deleteSelected()" class="btn btn-danger">Excluir Selecionados</button>
+    <button (click)="navigateToAdd()" class="btn btn-success">Adicionar</button>
+    <button (click)="navigateToUpdate()" [disabled]="selectedParticipants.length !== 1" class="btn btn-primary">Atualizar</button>
+
+  </div>
+
+</div>

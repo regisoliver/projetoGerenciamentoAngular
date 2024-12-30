@@ -1,0 +1,128 @@
+<div class="container">
+  <h2>Gerenciamento de Participantes - Adicionar</h2>
+  <form (ngSubmit)="onSubmit()" #form="ngForm">
+    <!-- Dados -->
+    <div class="section">
+      <h3>Dados</h3>
+
+      <!-- Primeira linha -->
+      <div class="form-group" style="display: flex; gap: 10px;">
+        <div style="flex: 1;">
+          <input id="codigo" type="text" maxlength="20" placeholder="Código" style="width: 100%;" [(ngModel)]="user.id" name="codigo" disabled />
+        </div>
+        <div style="flex: 1;">
+          <input id="codigoExterno" type="text" maxlength="20" placeholder="Código Externo" style="width: 100%;" [(ngModel)]="user.codigoExterno" name="codigoExterno" />
+        </div>
+        <div style="flex: 2;">
+          <input id="nomeCompleto" type="text" required placeholder="Nome Completo *" style="width: 100%;" [(ngModel)]="user.nomeCompleto" name="nomeCompleto" />
+        </div>
+        <div style="flex: 2;">
+          <input id="email" type="email" placeholder="Email" style="width: 100%;" [(ngModel)]="user.email" name="email" />
+        </div>
+        <div style="flex: 2; display: flex; align-items: center; gap: 10px;">
+          <input id="cpfCnpj" type="text" required placeholder="CPF/CNPJ *" style="flex: 2;" [(ngModel)]="user.cpfCnpj" name="cpfCnpj" [disabled]="user.cpfNaoSeAplica" />
+          <input type="checkbox" id="cpfNaoSeAplica" style="margin-left: 5px;" [(ngModel)]="user.cpfNaoSeAplica" name="cpfNaoSeAplica" />
+          <label for="cpfNaoSeAplica">CPF Não se aplica</label>
+        </div>
+      </div>
+
+      <!-- Segunda linha -->
+      <div class="form-group" style="display: flex; gap: 10px;">
+        <div style="flex: 1;">
+          <select id="sexo" style="width: 100%;" [(ngModel)]="user.sexo" name="sexo">
+            <option value="" disabled hidden>Sexo</option>
+            <option *ngFor="let option of sexoOptions" [value]="option">{{ option }}</option>
+          </select>
+        </div>
+        <div style="flex: 1;">
+          <select id="civil" style="width: 100%;" [(ngModel)]="user.civil" name="civil">
+            <option value="" disabled hidden>Estado Civil</option>
+            <option *ngFor="let option of estadoCivilOptions" [value]="option">{{ option }}</option>
+          </select>
+        </div>
+        <div style="flex: 2;">
+          <input id="conjuge" type="text" placeholder="Cônjuge" style="width: 100%;" [(ngModel)]="user.conjuge" name="conjuge" />
+        </div>
+        <div style="flex: 2;">
+          <input id="docIdentificacao" type="text" placeholder="Documento de Identificação" style="width: 100%;" [(ngModel)]="user.docIdentificacao" name="docIdentificacao" />
+        </div>
+      </div>
+
+      <!-- Terceira linha -->
+      <div class="form-group" style="display: flex; gap: 10px;">
+        <div style="flex: 2;">
+          <input id="observacao" type="text" placeholder="Observação" style="width: 100%;" [(ngModel)]="user.observacao" name="observacao" />
+        </div>
+        <div style="flex: 2;">
+          <input id="condicaoPessoal" type="text" placeholder="Condição Pessoal" style="width: 100%;" [(ngModel)]="user.condicaoPessoal" name="condicaoPessoal" />
+        </div>
+        <div style="flex: 1;">
+          <select id="codigoTelefone" style="width: 30%; display: inline-block;" [(ngModel)]="user.codigoTelefone" name="codigoTelefone">
+            <option *ngFor="let option of codigosTelefoneOptions" [value]="option">{{ option }}</option>
+          </select>
+          <input id="telefone" type="text" placeholder="Telefone" style="width: 65%; display: inline-block;" [(ngModel)]="user.telefone"
+                 name="telefone"
+                 pattern="^[0-9]*$"
+                 title="O telefone deve conter apenas números"
+                 maxlength="15"
+          />
+        </div>
+        <div style="flex: 1;">
+          <select id="codigoCelular" style="width: 30%; display: inline-block;" [(ngModel)]="user.codigoCelular" name="codigoCelular">
+            <option *ngFor="let option of codigosTelefoneOptions" [value]="option">{{ option }}</option>
+          </select>
+          <input id="telefoneCelular" type="text" placeholder="Celular" style="width: 65%; display: inline-block;" [(ngModel)]="user.telefoneCelular"
+                 name="telefoneCelular"
+                 pattern="^[0-9]*$"
+                 title="O celular deve conter apenas números"
+                 maxlength="15"
+          />
+        </div>
+      </div>
+
+      <!-- Quarta linha -->
+      <div class="form-group" style="display: flex; gap: 10px;">
+        <!-- Validade Ficha alinhado à esquerda -->
+        <div style="flex: 1; display: flex; align-items: center; gap: 10px; justify-content: flex-start;">
+          <label for="validadeFicha" style="flex: 1;" align="right">Validade Ficha</label>
+          <input id="validadeFicha" type="date" placeholder="Validade Ficha" style="flex: 2;" [(ngModel)]="user.validadeFicha" name="validadeFicha" [disabled]="user.validadeNaoSeAplica" />
+          <input type="checkbox" id="validadeNaoSeAplica" style="margin-left: 5px;" [(ngModel)]="user.validadeNaoSeAplica" name="validadeNaoSeAplica" />
+          <label for="validadeNaoSeAplica">Não se aplica</label>
+        </div>
+
+        <!-- Data Nascimento alinhado à direita -->
+        <div style="flex: 1; display: flex; align-items: center; gap: 10px; justify-content: flex-end;">
+          <label for="dataNascimento" style="flex: 1;" align="right">Data Nascimento</label>
+          <input id="dataNascimento" type="date" placeholder="Data Nascimento" style="flex: 2;" [(ngModel)]="user.dataNascimento" name="dataNascimento" />
+        </div>
+      </div>
+
+
+      <!-- Quinta linha -->
+      <div class="form-group fifth-line">
+        <label>
+          <input type="checkbox" id="habilitarEnvioSms" [(ngModel)]="user.habilitarEnvioSms" name="habilitarEnvioSms" />
+          Habilitar envio de token por SMS
+        </label>
+        <label>
+          <input type="checkbox" id="ativo" [(ngModel)]="user.ativo" name="ativo" />
+          Ativo
+        </label>
+        <label>
+          <input type="checkbox" id="pessoaExposta" [(ngModel)]="user.pessoaExposta" name="pessoaExposta" />
+          Pessoa politicamente exposta
+        </label>
+        <label>
+          <input type="checkbox" id="assinatura" [(ngModel)]="user.assinatura" name="assinatura" />
+          Assina digital/eletrônica
+        </label>
+      </div>
+    </div>
+    <!-- Botões -->
+    <div class="button-group" style="display: flex; justify-content: flex-end; gap: 10px;">
+      <button type="submit" [hidden]="user.id">Adicionar</button>
+      <button type="button" *ngIf="user.id" (click)="onUpdate()">Atualizar</button>
+      <button type="button" (click)="navigateToList()">Voltar</button>
+    </div>
+  </form>
+</div>
